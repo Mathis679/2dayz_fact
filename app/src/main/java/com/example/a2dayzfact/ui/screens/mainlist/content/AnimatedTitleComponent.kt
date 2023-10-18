@@ -13,14 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.example.a2dayzfact.ui.theme.bold32
 import kotlinx.coroutines.delay
 
 @Composable
 fun AnimatedTitleComponent(
+    modifier: Modifier = Modifier,
     title: String,
     subtitle: String,
     shouldAnimateText: Boolean
@@ -34,17 +33,14 @@ fun AnimatedTitleComponent(
         }
     }
 
-    Column(modifier = Modifier.height(150.dp)) {
+    Column(modifier = modifier.height(100.dp)) {
         AnimatedVisibility(
             visibleState = anim,
             enter = slideInHorizontally { fullWidth -> fullWidth } + fadeIn()
         ) {
             Text(
                 text = title,
-                style = TextStyle(
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 32.sp
-                ),
+                style = bold32(),
                 color = MaterialTheme.colorScheme.onSurface
             )
         }
@@ -55,10 +51,7 @@ fun AnimatedTitleComponent(
         ) {
             Text(
                 text = subtitle,
-                style = TextStyle(
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 32.sp
-                ),
+                style = bold32(),
                 color = MaterialTheme.colorScheme.primary
             )
         }

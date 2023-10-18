@@ -12,7 +12,6 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
@@ -29,9 +28,11 @@ fun MainListContent(
     currentDay: String,
     shouldAnimateText: Boolean
 ) {
-    val pagerState = rememberPagerState(initialPage = Int.MAX_VALUE / 2)
+    val pagerState = rememberPagerState()
     Column(modifier = Modifier.fillMaxWidth()) {
-        AnimatedTitleComponent(title = "En ce jour", subtitle = currentDay, shouldAnimateText = shouldAnimateText)
+        AnimatedTitleComponent(
+            modifier = Modifier.padding(horizontal = 32.dp, vertical = 16.dp),
+            title = "En ce jour", subtitle = currentDay, shouldAnimateText = shouldAnimateText)
         Surface(color = Color.Transparent) {
             AnimatedVisibility(
                 visible =  factsUiState is MainListViewModel.FactsUiState.Success,
@@ -42,15 +43,13 @@ fun MainListContent(
                 (factsUiState as? MainListViewModel.FactsUiState.Success)?.let {
                     HorizontalPager(
                         modifier = Modifier.fillMaxWidth(),
-                        pageCount = Int.MAX_VALUE,
+                        pageCount = factsUiState.facts.size,
                         state = pagerState,
-                        contentPadding = PaddingValues(horizontal = 64.dp)
+                        contentPadding = PaddingValues(horizontal = 64.dp, vertical = 16.dp)
                     ) { index ->
-                        val page = index % factsUiState.facts.size
                         FactItem(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .align(Alignment.CenterHorizontally)
                                 .graphicsLayer {
                                     // Calculate the absolute offset for the current page from the
                                     // scroll position. We use the absolute value which allows us to mirror
@@ -61,11 +60,12 @@ fun MainListContent(
                                             ).absoluteValue
 
                                     // We animate the alpha, between 50% and 100%
-                                    alpha = lerp(
-                                        start = 0.5f,
-                                        stop = 1f,
-                                        fraction = 1f - pageOffset.coerceIn(0f, 1f)
-                                    )
+                                    // Alpha is commented for now because it causes issues with card elevation
+//                                    alpha = lerp(
+//                                        start = 0.5f,
+//                                        stop = 1f,
+//                                        fraction = 1f - pageOffset.coerceIn(0f, 1f)
+//                                    )
 
                                     scaleX = lerp(
                                         start = 0.7f,
@@ -79,10 +79,10 @@ fun MainListContent(
                                         fraction = 1f - pageOffset.coerceIn(0f, 1f)
                                     )
                                 },
-                            year = factsUiState.facts[page].year,
-                            title = factsUiState.facts[page].title,
-                            content = factsUiState.facts[page].content,
-                            image = factsUiState.facts[page].image
+                            year = factsUiState.facts[index].year,
+                            title = factsUiState.facts[index].title,
+                            content = factsUiState.facts[index].content,
+                            image = factsUiState.facts[index].image
                         )
                     }
                 }
@@ -94,7 +94,7 @@ fun MainListContent(
                 exit = fadeOut(),
                 label = ""
             ) {
-                FactItemPlaceHolder(modifier = Modifier.padding(horizontal = 64.dp))
+                FactItemPlaceHolder(modifier = Modifier.padding(horizontal = 64.dp, vertical = 16.dp))
             }
         }
     }

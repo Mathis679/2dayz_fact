@@ -11,22 +11,24 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.a2dayzfact.ui.theme.Grey
 import com.example.a2dayzfact.ui.theme.GreyClear
+import com.example.a2dayzfact.ui.theme.bold16
+import com.example.a2dayzfact.ui.theme.bold18
+import com.example.a2dayzfact.ui.theme.medium15
 
 @Composable
 fun FactItem(
@@ -38,7 +40,12 @@ fun FactItem(
 ) {
     Card(
         modifier = modifier,
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.background
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 8.dp
+        ),
     ) {
         AsyncImage(
             modifier = Modifier.fillMaxWidth(),
@@ -47,29 +54,32 @@ fun FactItem(
         )
 
         Text(
+            modifier = Modifier.padding(horizontal = 8.dp),
             text = title,
-            style = TextStyle(
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp
-            ),
+            style = bold18(),
             color = MaterialTheme.colorScheme.onSurface,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis
         )
 
         Text(
+            modifier = Modifier.padding(horizontal = 8.dp),
             text = content,
-            style = TextStyle(
-                fontWeight = FontWeight.Normal,
-                fontSize = 15.sp
-            ),
+            style = medium15(),
             color = MaterialTheme.colorScheme.onSurface,
             maxLines = 5,
             overflow = TextOverflow.Ellipsis
         )
 
-        Button(onClick = {  }) {
-            Text(text = "Voir plus")
+        Button(
+            modifier = Modifier.padding(vertical = 8.dp).align(Alignment.CenterHorizontally),
+            onClick = {  }
+        ) {
+            Text(
+                text = "Voir plus",
+                style = bold16(),
+                color = MaterialTheme.colorScheme.onPrimary
+            )
         }
     }
 }

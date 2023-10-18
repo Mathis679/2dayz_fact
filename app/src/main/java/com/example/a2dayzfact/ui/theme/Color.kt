@@ -2,7 +2,9 @@ package com.example.a2dayzfact.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val BlueClear = Color(0xFF74AAFB)
+val BlueClear = Color(0xFFa7c8ff)
+val Blue = Color(0xFF1c5eaa)
+val BlueDark = Color(0xFF003061)
 
 val Beige = Color(0xFFFAF9F3)
 
