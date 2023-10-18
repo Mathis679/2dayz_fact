@@ -8,6 +8,9 @@ val Beige = Color(0xFFFAF9F3)
 
 val Dark = Color(0xFF1C1B1F)
 
+val Grey = Color(0xB31C1B1F)
+val GreyClear = Color(0x401C1B1F)
+
 val Purple80 = Color(0xFFD0BCFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)
 val Pink80 = Color(0xFFEFB8C8)
