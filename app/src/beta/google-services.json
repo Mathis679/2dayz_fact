@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "112772563619",
+    "firebase_url": "https://onthisday---beta-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "onthisday---beta",
+    "storage_bucket": "onthisday---beta.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:112772563619:android:afa30bb5efcc57bc703516",
+        "android_client_info": {
+          "package_name": "com.example.a2dayzfact.beta"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRx-Ot2w2QP1vf9bsJBz0cxlJZ0aTYH-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

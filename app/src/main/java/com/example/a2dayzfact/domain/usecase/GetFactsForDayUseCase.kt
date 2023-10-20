@@ -1,26 +1,37 @@
 package com.example.a2dayzfact.domain.usecase
 
+import com.example.a2dayzfact.data.FactsRepository
 import com.example.a2dayzfact.di.module.DefaultDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.random.Random
 
 class GetFactsForDayUseCase @Inject constructor(
+    private val factsRepository: FactsRepository,
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher
 ) {
 
     suspend operator fun invoke(day: Int, month: Int) : List<Fact> = withContext(dispatcher) {
-        // TODO call repository
-        delay(1000)
-        listOf(
-            randomFact(),
-            randomFact(),
-            randomFact(),
-            randomFact(),
-            randomFact()
-        )
+//        delay(1000)
+//        listOf(
+//            randomFact(),
+//            randomFact(),
+//            randomFact(),
+//            randomFact(),
+//            randomFact()
+//        )
+        val dayMonthStr = "${if (month < 10) "0$month" else month}${if (day < 10) "0$day" else day}"
+        factsRepository.getFactsForDay(dayMonthStr).mapNotNull { model ->
+            model?.let {
+                Fact(
+                    year = model.year,
+                    title = model.title,
+                    content = model.content,
+                    image = model.image
+                )
+            }
+        }
     }
 
     private suspend fun randomFact(): Fact = withContext(dispatcher) {

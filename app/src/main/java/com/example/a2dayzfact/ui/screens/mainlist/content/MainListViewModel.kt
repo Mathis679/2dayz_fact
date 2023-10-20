@@ -72,7 +72,7 @@ class MainListViewModel @Inject constructor(
             FactsUiState.Success(
                 getFactsForDayUseCase(
                     day = currentDay.get(Calendar.DAY_OF_MONTH),
-                    month = currentDay.get(Calendar.MONTH)
+                    month = currentDay.get(Calendar.MONTH) + 1
                 )
             )
         )
