@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,13 +31,15 @@ import com.example.a2dayzfact.ui.theme.bold16
 import com.example.a2dayzfact.ui.theme.bold18
 import com.example.a2dayzfact.ui.theme.medium15
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FactItem(
     modifier: Modifier = Modifier,
     year: Int,
     title: String,
     content: String,
-    image: String
+    image: String,
+    onClick: () -> Unit
 ) {
     Card(
         modifier = modifier,
@@ -44,8 +47,10 @@ fun FactItem(
             containerColor = MaterialTheme.colorScheme.background
         ),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 8.dp
+            defaultElevation = 8.dp,
+            pressedElevation = 2.dp
         ),
+        onClick = onClick
     ) {
         AsyncImage(
             modifier = Modifier.fillMaxWidth(),
@@ -73,7 +78,7 @@ fun FactItem(
 
         Button(
             modifier = Modifier.padding(vertical = 8.dp).align(Alignment.CenterHorizontally),
-            onClick = {  }
+            onClick = onClick
         ) {
             Text(
                 text = "Voir plus",

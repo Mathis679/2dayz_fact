@@ -1,5 +1,6 @@
 package com.example.a2dayzfact.ui.screens.mainlist.content
 
+import com.example.a2dayzfact.data.FactDetailRepository
 import com.example.a2dayzfact.di.module.MainDispatcher
 import com.example.a2dayzfact.domain.usecase.GetFactsForDayUseCase
 import com.example.a2dayzfact.ui.base.BaseViewModel
@@ -16,6 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainListViewModel @Inject constructor(
     private val getFactsForDayUseCase: GetFactsForDayUseCase,
+    private val factDetailRepository: FactDetailRepository,
     @MainDispatcher dispatcher: CoroutineDispatcher
 ): BaseViewModel(dispatcher) {
 
@@ -45,6 +47,10 @@ class MainListViewModel @Inject constructor(
     fun previousDay() = launch {
         currentDay.add(Calendar.DAY_OF_MONTH, -1)
         loadPage()
+    }
+
+    fun clickOnFact(fact: GetFactsForDayUseCase.Fact) = launch {
+        factDetailRepository.saveInCache(fact)
     }
 
     private fun getDayString(calendar: Calendar) : String {

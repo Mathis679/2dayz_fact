@@ -16,7 +16,7 @@ import kotlin.coroutines.suspendCoroutine
 
 @Singleton
 class FactsRepository @Inject constructor(
-    private val firebaseDatabase: FirebaseDatabase,
+    firebaseDatabase: FirebaseDatabase,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) {
     companion object {

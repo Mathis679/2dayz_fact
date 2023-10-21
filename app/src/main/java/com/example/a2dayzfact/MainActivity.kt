@@ -3,7 +3,8 @@ package com.example.a2dayzfact
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.example.a2dayzfact.ui.screens.mainlist.content.MainListScreen
+import androidx.navigation.compose.rememberNavController
+import com.example.a2dayzfact.ui.navigation.FactNavigationGraph
 import com.example.a2dayzfact.ui.theme._2dayzFactTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -13,7 +14,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             _2dayzFactTheme {
-                MainListScreen()
+                FactNavigationGraph(rememberNavController())
             }
         }
     }

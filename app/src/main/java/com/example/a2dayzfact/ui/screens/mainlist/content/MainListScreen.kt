@@ -29,7 +29,8 @@ import com.example.a2dayzfact.ui.theme.medium15
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MainListScreen(
-    viewModel: MainListViewModel = hiltViewModel()
+    viewModel: MainListViewModel = hiltViewModel(),
+    goToDetail: () -> Unit
 ) {
     val mainState = viewModel.mainListUiState.collectAsStateWithLifecycle().value
     val listState = viewModel.factsUiState.collectAsStateWithLifecycle().value
@@ -86,7 +87,11 @@ fun MainListScreen(
             MainListContent(
                 factsUiState = listState,
                 currentDay = mainState.currentDay,
-                shouldAnimateText = !this.transition.isRunning
+                shouldAnimateText = !this.transition.isRunning,
+                onClick = {
+                    viewModel.clickOnFact(it)
+                    goToDetail()
+                }
             )
         }
     }

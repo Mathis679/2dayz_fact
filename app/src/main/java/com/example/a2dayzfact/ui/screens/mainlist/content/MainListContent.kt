@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
+import com.example.a2dayzfact.domain.usecase.GetFactsForDayUseCase
 import com.example.a2dayzfact.ui.screens.fact.item.FactItem
 import com.example.a2dayzfact.ui.screens.fact.item.FactItemPlaceHolder
 import kotlin.math.absoluteValue
@@ -26,7 +27,8 @@ import kotlin.math.absoluteValue
 fun MainListContent(
     factsUiState: MainListViewModel.FactsUiState,
     currentDay: String,
-    shouldAnimateText: Boolean
+    shouldAnimateText: Boolean,
+    onClick: (GetFactsForDayUseCase.Fact) -> Unit
 ) {
     val pagerState = rememberPagerState()
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -82,7 +84,10 @@ fun MainListContent(
                             year = factsUiState.facts[index].year,
                             title = factsUiState.facts[index].title,
                             content = factsUiState.facts[index].content,
-                            image = factsUiState.facts[index].image
+                            image = factsUiState.facts[index].image,
+                            onClick = {
+                                onClick(factsUiState.facts[index])
+                            }
                         )
                     }
                 }
