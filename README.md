@@ -17,3 +17,5 @@ Clean Architecture with MVVM (Coroutines, StateFlow...)
 • UI : [Jetpack Compose](https://developer.android.com/jetpack/compose)
 
 ## Preview
+
+![](https://github.com/Mathis679/2dayz_fact/blob/main/app_screen_record.gif)
