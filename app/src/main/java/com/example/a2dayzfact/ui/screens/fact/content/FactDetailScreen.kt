@@ -6,7 +6,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun FactDetailScreen(
-    viewModel: FactDetailViewModel = hiltViewModel()
+    viewModel: FactDetailViewModel = hiltViewModel(),
+    goToSource: (String) -> Unit
 ) {
     viewModel.loadPage()
     val factState = viewModel.factUiState.collectAsStateWithLifecycle().value
@@ -17,7 +18,10 @@ fun FactDetailScreen(
                 image = factState.fact.image,
                 title = factState.fact.title,
                 titleDate = factState.displayDate,
-                content = factState.fact.content
+                content = factState.fact.content,
+                goToSource = {
+                    goToSource(factState.fact.source)
+                }
             )
         }
         else -> {

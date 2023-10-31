@@ -15,8 +15,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
+import com.example.a2dayzfact.R
 import com.example.a2dayzfact.domain.usecase.GetFactsForDayUseCase
 import com.example.a2dayzfact.ui.screens.fact.item.FactItem
 import com.example.a2dayzfact.ui.screens.fact.item.FactItemPlaceHolder
@@ -34,7 +36,10 @@ fun MainListContent(
     Column(modifier = Modifier.fillMaxWidth()) {
         AnimatedTitleComponent(
             modifier = Modifier.padding(horizontal = 32.dp, vertical = 16.dp),
-            title = "En ce jour", subtitle = currentDay, shouldAnimateText = shouldAnimateText)
+            title = stringResource(id = R.string.title_main_list),
+            subtitle = currentDay,
+            shouldAnimateText = shouldAnimateText
+        )
         Surface(color = Color.Transparent) {
             AnimatedVisibility(
                 visible =  factsUiState is MainListViewModel.FactsUiState.Success,

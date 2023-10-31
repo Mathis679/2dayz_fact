@@ -1,6 +1,8 @@
 package com.example.a2dayzfact.data
 
+import com.example.a2dayzfact.data.api.WikiApi
 import com.example.a2dayzfact.data.model.FactRemoteEntity
+import com.example.a2dayzfact.data.model.WikiFactEntity
 import com.example.a2dayzfact.di.module.IoDispatcher
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -17,6 +19,7 @@ import kotlin.coroutines.suspendCoroutine
 @Singleton
 class FactsRepository @Inject constructor(
     firebaseDatabase: FirebaseDatabase,
+    private val wikiApi: WikiApi,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) {
     companion object {
@@ -42,5 +45,12 @@ class FactsRepository @Inject constructor(
                     }
                 })
         }
+    }
+
+    suspend fun getFactsFromWiki(day: Int, month: Int): List<WikiFactEntity> = withContext(dispatcher) {
+        wikiApi.getFacts(
+            month = "${if (month < 10) "0$month" else month}",
+            day = "${if (day < 10) "0$day" else day}"
+        ).facts
     }
 }

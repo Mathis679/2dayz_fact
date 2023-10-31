@@ -74,12 +74,13 @@ class MainListViewModel @Inject constructor(
             )
         )
         _factsUiState.emit(FactsUiState.Loading)
+        val data = getFactsForDayUseCase(
+            day = currentDay.get(Calendar.DAY_OF_MONTH),
+            month = currentDay.get(Calendar.MONTH) + 1
+        )
         _factsUiState.emit(
             FactsUiState.Success(
-                getFactsForDayUseCase(
-                    day = currentDay.get(Calendar.DAY_OF_MONTH),
-                    month = currentDay.get(Calendar.MONTH) + 1
-                )
+                data
             )
         )
     }

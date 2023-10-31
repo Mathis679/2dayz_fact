@@ -41,7 +41,9 @@ fun MainListScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.surface)
     ) {
-        Row(modifier = Modifier.fillMaxWidth().padding(top = 24.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 24.dp), horizontalArrangement = Arrangement.SpaceBetween) {
             Button(
                 onClick = {
                     page.value = page.value - 1

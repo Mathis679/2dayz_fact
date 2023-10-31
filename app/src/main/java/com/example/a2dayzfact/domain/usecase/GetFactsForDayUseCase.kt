@@ -5,7 +5,6 @@ import com.example.a2dayzfact.di.module.DefaultDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import kotlin.random.Random
 
 class GetFactsForDayUseCase @Inject constructor(
     private val factsRepository: FactsRepository,
@@ -13,38 +12,22 @@ class GetFactsForDayUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(day: Int, month: Int) : List<Fact> = withContext(dispatcher) {
-//        delay(1000)
-//        listOf(
-//            randomFact(),
-//            randomFact(),
-//            randomFact(),
-//            randomFact(),
-//            randomFact()
-//        )
-        val dayMonthStr = "${if (month < 10) "0$month" else month}${if (day < 10) "0$day" else day}"
-        factsRepository.getFactsForDay(dayMonthStr).mapNotNull { model ->
-            model?.let {
+        factsRepository.getFactsFromWiki(day, month).mapNotNull { model ->
+            try {
                 Fact(
                     year = model.year,
                     month = month,
                     day = day,
                     title = model.title,
-                    content = model.content,
-                    image = model.image
+                    content = model.pages[0].content,
+                    source = model.pages[0].urls.mobile.source,
+                    image = model.pages[0].thumbnail.source
                 )
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
             }
         }
-    }
-
-    private suspend fun randomFact(): Fact = withContext(dispatcher) {
-        Fact(
-            year = Random(2022).nextInt(),
-            month = Random(12).nextInt(),
-            day = Random(30).nextInt(),
-            title = "French and British forces bombard Sevastopol for the first time during the Crimean War",
-            content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id turpis bibendum ipsum consectetur vulputate nec viverra enim. Ut vitae velit urna. Quisque non libero nulla. Quisque orci purus, imperdiet id est sit amet, sodales tempor magna. Aenean libero magna, tempus vitae orci sit amet, pellentesque accumsan ipsum. Proin vitae ligula sollicitudin, suscipit nulla eget, venenatis felis. Ut et pharetra urna. Ut aliquam, urna ut ultrices aliquam, tellus nisl hendrerit justo, id venenatis quam risus a turpis. Aliquam dapibus orci sed arcu rhoncus, sed congue orci ornare. Vivamus nulla nibh, porta congue nibh non, luctus vulputate neque. Mauris a dui eu turpis dignissim ultrices dapibus sed urna. Integer consequat purus velit, sit amet luctus tellus pellentesque sed. Nam rhoncus nulla velit, ut ultrices est ultricies ut. Nullam et ligula quis arcu venenatis sodales eget vitae tellus. Morbi neque odio, ultricies sit amet libero ut, auctor ultricies ante. Integer ullamcorper ligula ligula, non euismod nunc vulputate id. Mauris eu accumsan ante. Donec viverra tempor rhoncus.",
-            image = "https://picsum.photos/230/100"
-        )
     }
 
     data class Fact(
@@ -53,6 +36,7 @@ class GetFactsForDayUseCase @Inject constructor(
         val day: Int,
         val title: String,
         val content: String,
+        val source: String,
         val image: String
     )
 }

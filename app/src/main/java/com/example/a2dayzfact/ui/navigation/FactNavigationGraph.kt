@@ -14,7 +14,8 @@ import com.example.a2dayzfact.ui.screens.mainlist.content.MainListViewModel
 fun FactNavigationGraph(
     navController: NavHostController,
     mainListViewModel: MainListViewModel = hiltViewModel(),
-    factDetailViewModel: FactDetailViewModel = hiltViewModel()
+    factDetailViewModel: FactDetailViewModel = hiltViewModel(),
+    goToSource: (String) -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -26,7 +27,9 @@ fun FactNavigationGraph(
             }
         }
         composable(route = FactNavigationItems.FactDetailPage.screenRoute) {
-            FactDetailScreen(viewModel = factDetailViewModel)
+            FactDetailScreen(viewModel = factDetailViewModel) {
+                goToSource(it)
+            }
         }
     }
 }

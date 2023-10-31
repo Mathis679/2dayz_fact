@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -35,10 +36,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
 import coil.compose.AsyncImage
+import com.example.a2dayzfact.R
+import com.example.a2dayzfact.ui.theme.bold16
 import com.example.a2dayzfact.ui.theme.bold32
 import com.example.a2dayzfact.ui.theme.medium15
 
@@ -47,7 +51,8 @@ fun FactDetailContent(
     image: String,
     title: String,
     titleDate: String,
-    content: String
+    content: String,
+    goToSource: () -> Unit
 ) {
     Surface {
         CollapsingToolbarParallaxEffect(
@@ -57,7 +62,8 @@ fun FactDetailContent(
             image = image,
             title = title,
             titleDate = titleDate,
-            content = content
+            content = content,
+            goToSource = goToSource
         )
     }
 }
@@ -80,6 +86,7 @@ fun CollapsingToolbarParallaxEffect(
     title: String,
     titleDate: String,
     content: String,
+    goToSource: () -> Unit
 ) {
     val scroll: ScrollState = rememberScrollState(0)
 
@@ -97,10 +104,11 @@ fun CollapsingToolbarParallaxEffect(
 
         )
         Body(
+            modifier = Modifier.fillMaxSize(),
             scroll = scroll,
             title = title,
             content = content,
-            modifier = Modifier.fillMaxSize()
+            goToSource = goToSource
         )
         Toolbar(
             scroll = scroll,
@@ -132,7 +140,7 @@ private fun Header(
             modifier = modifier.fillMaxSize(),
             model = image,
             contentDescription = null,
-            contentScale = ContentScale.FillBounds
+            contentScale = ContentScale.Crop
         )
 
         Box(
@@ -148,7 +156,8 @@ private fun Body(
     modifier: Modifier = Modifier,
     scroll: ScrollState,
     title: String,
-    content: String
+    content: String,
+    goToSource: () -> Unit
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -168,6 +177,18 @@ private fun Body(
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Justify
         )
+        Button(
+            modifier = Modifier
+                .padding(vertical = 16.dp)
+                .align(Alignment.CenterHorizontally),
+            onClick = goToSource
+        ) {
+            Text(
+                text = stringResource(id = R.string.button_source),
+                style = bold16(),
+                color = MaterialTheme.colorScheme.onPrimary
+            )
+        }
     }
 }
 

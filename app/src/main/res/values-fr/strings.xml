@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="button_see_more">Voir plus</string>
+    <string name="button_source">Source</string>
+    <string name="title_main_list">En ce jour</string>
+</resources>

@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">2day\'z Fact</string>
+    <string name="app_name" translatable="false">2day\'z Fact</string>
+
+    <string name="button_see_more">See more</string>
+    <string name="button_source">Source</string>
+    <string name="title_main_list">On this day</string>
 </resources>
