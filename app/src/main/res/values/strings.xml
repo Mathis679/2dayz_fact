@@ -4,4 +4,6 @@
     <string name="button_see_more">See more</string>
     <string name="button_source">Source</string>
     <string name="title_main_list">On this day</string>
+    <string name="title_notification">What\'s up ?</string>
+    <string name="content_notification">Discover main events occurred on %1$s</string>
 </resources>
