@@ -5,7 +5,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.animation.with
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,7 +18,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -34,7 +34,7 @@ fun MainListScreen(
 ) {
     val mainState = viewModel.mainListUiState.collectAsStateWithLifecycle().value
     val listState = viewModel.factsUiState.collectAsStateWithLifecycle().value
-    val page = remember { mutableStateOf(0) }
+    val page = remember { mutableIntStateOf(0) }
 
     Column(
         modifier = Modifier
@@ -46,7 +46,7 @@ fun MainListScreen(
             .padding(top = 24.dp), horizontalArrangement = Arrangement.SpaceBetween) {
             Button(
                 onClick = {
-                    page.value = page.value - 1
+                    page.intValue = page.intValue - 1
                     viewModel.previousDay()
                 },
                 shape = RoundedCornerShape(topStartPercent = 0, bottomStartPercent = 0, topEndPercent = 50, bottomEndPercent = 50)
@@ -60,7 +60,7 @@ fun MainListScreen(
 
             Button(
                 onClick = {
-                    page.value = page.value + 1
+                    page.intValue = page.intValue + 1
                     viewModel.nextDay()
                 },
                 shape = RoundedCornerShape(topStartPercent = 50, bottomStartPercent = 50, topEndPercent = 0, bottomEndPercent = 0)
@@ -74,18 +74,18 @@ fun MainListScreen(
         }
         
         AnimatedContent(
-            targetState = page.value,
+            targetState = page.intValue,
             transitionSpec = {
                 if (targetState > initialState) {
-                    slideInHorizontally { width -> width } with slideOutHorizontally { width -> -width }
+                    slideInHorizontally { width -> width } togetherWith slideOutHorizontally { width -> -width }
                 } else {
-                    slideInHorizontally { width -> -width } with slideOutHorizontally { width -> width }
+                    slideInHorizontally { width -> -width } togetherWith slideOutHorizontally { width -> width }
                 }.using(
                     SizeTransform(clip = false)
                 )
             },
             label = ""
-        ) {
+        ) { _ ->
             MainListContent(
                 factsUiState = listState,
                 currentDay = mainState.currentDay,

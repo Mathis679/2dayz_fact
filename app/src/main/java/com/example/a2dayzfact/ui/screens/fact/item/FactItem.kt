@@ -66,9 +66,11 @@ fun FactItem(
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
             )
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5F)))
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5F))
+            )
             Text(
                 modifier = Modifier
                     .align(Alignment.TopStart)

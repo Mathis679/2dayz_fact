@@ -32,7 +32,6 @@ fun MainListContent(
     shouldAnimateText: Boolean,
     onClick: (GetFactsForDayUseCase.Fact) -> Unit
 ) {
-    val pagerState = rememberPagerState()
     Column(modifier = Modifier.fillMaxWidth()) {
         AnimatedTitleComponent(
             modifier = Modifier.padding(horizontal = 32.dp, vertical = 16.dp),
@@ -48,9 +47,11 @@ fun MainListContent(
                 label = ""
             ) {
                 (factsUiState as? MainListViewModel.FactsUiState.Success)?.let {
+                    val pagerState = rememberPagerState {
+                        factsUiState.facts.size
+                    }
                     HorizontalPager(
                         modifier = Modifier.fillMaxWidth(),
-                        pageCount = factsUiState.facts.size,
                         state = pagerState,
                         contentPadding = PaddingValues(horizontal = 64.dp, vertical = 16.dp)
                     ) { index ->

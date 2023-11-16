@@ -1,12 +1,15 @@
 package com.example.a2dayzfact.data.model
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class WikiFactListEntity(
     @SerializedName("events")
     val facts: List<WikiFactEntity>
 )
 
+@Keep
 data class WikiFactEntity(
     @SerializedName("text")
     val title: String,
@@ -16,6 +19,7 @@ data class WikiFactEntity(
     val pages: List<WikiPage>
 )
 
+@Keep
 data class WikiPage(
     @SerializedName("thumbnail")
     val thumbnail: WikiThumbnail,
@@ -25,16 +29,19 @@ data class WikiPage(
     val urls: WikiPageSources
 )
 
+@Keep
 data class WikiPageSources(
     @SerializedName("mobile")
     val mobile: WikiPageSource
 )
 
+@Keep
 data class WikiPageSource(
     @SerializedName("page")
     val source: String
 )
 
+@Keep
 data class WikiThumbnail(
     @SerializedName("source")
     val source: String

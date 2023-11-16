@@ -25,6 +25,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -101,7 +102,7 @@ fun CollapsingToolbarParallaxEffect(
             scroll = scroll,
             image = image,
             headerHeightPx = headerHeightPx,
-
+            toolbarHeightPx = toolbarHeightPx
         )
         Body(
             modifier = Modifier.fillMaxSize(),
@@ -127,13 +128,18 @@ private fun Header(
     modifier: Modifier = Modifier,
     image: String,
     scroll: ScrollState,
-    headerHeightPx: Float
+    headerHeightPx: Float,
+    toolbarHeightPx: Float
 ) {
+    val toolbarBottom by remember {
+        mutableFloatStateOf(headerHeightPx - toolbarHeightPx)
+    }
+
     Box(
         modifier = modifier
             .graphicsLayer {
                 translationY = -scroll.value.toFloat() / 2f // Parallax effect
-                alpha = (-1f / headerHeightPx) * scroll.value + 1
+                alpha = 1f - (scroll.value / toolbarBottom)
             }
     ) {
         AsyncImage(
@@ -146,7 +152,7 @@ private fun Header(
         Box(
             Modifier
                 .fillMaxSize()
-                .background(Color.Transparent)
+                .background(MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5F))
         )
     }
 }
@@ -189,6 +195,7 @@ private fun Body(
                 color = MaterialTheme.colorScheme.onPrimary
             )
         }
+        Spacer(modifier = Modifier.height(headerHeight))
     }
 }
 
@@ -201,7 +208,7 @@ private fun Toolbar(
     toolbarHeightPx: Float
 ) {
     val toolbarBottom by remember {
-        mutableStateOf(headerHeightPx - toolbarHeightPx)
+        mutableFloatStateOf(headerHeightPx - toolbarHeightPx)
     }
 
     val showToolbar by remember {
