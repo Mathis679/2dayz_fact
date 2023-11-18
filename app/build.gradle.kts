@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.a2dayzfact"
+    namespace = "com.mathislaurent.a2dayzfact"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.a2dayzfact"
+        applicationId = "com.mathislaurent.a2dayzfact"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
