@@ -1,5 +1,7 @@
 package com.example.a2dayzfact.ui.navigation
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
@@ -23,7 +25,9 @@ fun FactNavigationGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = FactNavigationItems.FactMainPage.screenRoute
+        startDestination = FactNavigationItems.FactMainPage.screenRoute,
+        enterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None }
     ) {
         composable(
             route = FactNavigationItems.FactMainPage.screenRoute
